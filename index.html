@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="SQS: Bayesian DNN Compression through Sparse Quantized Sub-distributions">
+  <meta name="description" content="SQS unifies weight pruning and low-bit quantization for deep neural networks via Bayesian variational learning, using a spike-and-slab prior for sparsity and Gaussian Mixture Models for quantized weights. Published in TMLR (2026).">
+  <meta name="author" content="Ziyi Wang, Nan Jiang, Guang Lin, Qifan Song">
+  <meta name="keywords" content="model compression, pruning, quantization, Bayesian deep learning, variational inference, spike-and-slab, Gaussian mixture model, TMLR">
+  <meta name="citation_title" content="SQS: Bayesian DNN Compression through Sparse Quantized Sub-distributions">
+  <meta name="citation_author" content="Wang, Ziyi">
+  <meta name="citation_author" content="Jiang, Nan">
+  <meta name="citation_author" content="Lin, Guang">
+  <meta name="citation_author" content="Song, Qifan">
+  <meta name="citation_journal_title" content="Transactions on Machine Learning Research">
+  <meta name="citation_publication_date" content="2026/08">
+  <meta name="citation_arxiv_id" content="2510.08999">
+  <meta name="citation_abstract_html_url" content="https://openreview.net/forum?id=3nZb43fvAQ">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://comeusr.github.io/SQS_Webpage/">
+  <meta property="og:title" content="SQS: Bayesian DNN Compression through Sparse Quantized Sub-distributions">
+  <meta property="og:description" content="SQS unifies weight pruning and low-bit quantization for deep neural networks via Bayesian variational learning, using a spike-and-slab prior for sparsity and Gaussian Mixture Models for quantized weights. Published in TMLR (2026).">
+  <meta property="og:image" content="https://comeusr.github.io/SQS_Webpage/static/images/sqs-main-diagram-crop.jpg">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://comeusr.github.io/SQS_Webpage/">
+  <meta name="twitter:title" content="SQS: Bayesian DNN Compression through Sparse Quantized Sub-distributions">
+  <meta name="twitter:description" content="SQS unifies weight pruning and low-bit quantization for deep neural networks via Bayesian variational learning, using a spike-and-slab prior for sparsity and Gaussian Mixture Models for quantized weights. Published in TMLR (2026).">
+  <meta name="twitter:image" content="https://comeusr.github.io/SQS_Webpage/static/images/sqs-main-diagram-crop.jpg">
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+
+  <title>SQS: Bayesian DNN Compression through Sparse Quantized Sub-distributions</title>
+  <link rel="canonical" href="https://comeusr.github.io/SQS_Webpage/">
+  
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.6/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.6/css/academicons.min.css">
+  </noscript>
+  
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+  
+ 
+</head>
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">SQS: Bayesian DNN Compression through <span class="title-second-line">Sparse Quantized Sub-distributions</span></h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://www.linkedin.com/in/ziyi-wang-48b02a183/" target="_blank">Ziyi Wang</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="http://jiangnanhugo.github.io/" target="_blank">Nan Jiang</a><sup>2</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://www.math.purdue.edu/~lin491/" target="_blank">Guang Lin</a><sup>1</sup>,
+                  </span>
+                  <span class="author-block">
+                    <a href="https://www.stat.purdue.edu/~qfsong" target="_blank">Qifan Song</a><sup>1</sup>
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block"><sup>1</sup>Purdue University, IN, USA.</span>
+                    <span class="author-block"><sup>2</sup>University of Texas at El Paso, TX, USA.</span>
+                  </div>
+                  <div class="is-size-5 publication-authors">
+                    <span class="Emails">Emails: {wang4538,guanglin, qfsong}@purdue.edu, njiang@utep.edu</span>
+                  </div>
+
+                  <div class="is-size-5 publication-venue">
+                    Published in Transactions on Machine Learning Research (TMLR), Sep 2026
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                      <span class="link-block">
+                        <a href="https://openreview.net/forum?id=3nZb43fvAQ" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                  <span class="link-block">
+                    <a href="https://github.com/comeusr/SQS_TMLR" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2510.08999" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Teaser video-->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/sqs-main-diagram-crop.jpg" alt="Main diagram" loading="lazy"/>
+      <h3 class="subtitle has-text-justified">
+       Figure 1: Our SQS achieves high compression and minimal performance degradation by jointly pruning and quantizing model weights
+through variational learning. We use a spike-and-GMM variational distribution to approximate
+full-precision weights: the spike component promotes sparsity for pruning, while the slab component
+(i.e., GMM) models a quantized weight distribution.
+      </h3>
+    </div>
+  </div>
+</section>
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Compressing large-scale neural networks is essential for deploying models on resource-constrained
+devices. Most existing methods adopt weight pruning or low-bit quantization individually, often resulting
+in suboptimal compression rates to preserve acceptable performance drops. We introduce a unified
+framework for simultaneous pruning and low-bit quantization via Bayesian variational learning (Sqs),
+which achieves higher compression rates than prior baselines while maintaining comparable performance.
+The key idea is to employ a spike-and-slab prior to inducing sparsity and model quantized weights
+using Gaussian Mixture Models (GMMs) to enable low-bit precision. In theory, we provide the consistent
+result of our proposed variational approach to a sparse and quantized deep neural network. Extensive
+experiments on compressing ResNet, BERT-base, Llama3, and Qwen2.5 models show that our method
+achieves higher compression rates than a line of existing methods with comparable performance drops. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+
+
+
+
+<!-- Image carousel -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+       <div class="item">
+        <img src="static/images/weight_distribution.jpg" alt="First research result visualization" loading="lazy"/>
+        <h2 class="subtitle has-text-justified">
+          Figure 2: Impact of different window strategies. For the compressed weight distributions in the first
+attention layer of the Llama3.2-1B model, Sqs with outlier-aware window strategy (left) yields better
+preservation of the full-precision weight distribution compared to the equal-sized window (middle).
+This advantage is also evident in the left tail region shown in (right).
+        </h2>
+      </div>
+      <div class="item">
+        <img src="static/images/resnet18_50_cifar100.jpg" alt="Second research result visualization" loading="lazy"/>
+        <h2 class="subtitle has-text-justified">
+Figure 3: Comparison of inference accuracy on the CIFAR-100 dataset using ResNet-18 (left) and
+ResNet-50 (right). Under the same number of Gaussian components, SQS with Bayesian averaging results in a smaller accuracy drop compared to using a greedy approach.
+        </h2>
+      </div>
+  </div>
+</div>
+</div>
+</section>
+
+
+
+
+
+
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{wang2026sqs,
+  title={{SQS}: Bayesian {DNN} Compression through Sparse Quantized Sub-distributions},
+  author={Ziyi Wang and Nan Jiang and Guang Lin and Qifan Song},
+  journal={Transactions on Machine Learning Research},
+  issn={2835-8856},
+  year={2026},
+  url={https://openreview.net/forum?id=3nZb43fvAQ}
+}</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  </main>
+
+  </body>
+  </html>
